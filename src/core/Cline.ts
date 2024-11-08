@@ -49,7 +49,7 @@ import { showOmissionWarning } from "../integrations/editor/detect-omission"
 import { BrowserSession } from "../services/browser/BrowserSession"
 
 const cwd =
-	vscode.workspace.workspaceFolders?.map((folder) => folder.uri.fsPath).at(0) ?? path.join(os.homedir(), "Desktop") // may or may not exist but fs checking existence would immediately ask for permission which would be bad UX, need to come up with a better solution
+	vscode.workspace.workspaceFolders?.map((folder) => folder.uri.fsPath).at(0) ?? path.join(os.homedir(), "Desktop")
 
 type ToolResponse = string | Array<Anthropic.TextBlockParam | Anthropic.ImageBlockParam>
 type UserContent = Array<
@@ -1034,8 +1034,6 @@ export class Cline {
 							fileExists = await fileExistsAtPath(absolutePath)
 							this.diffViewProvider.editType = fileExists ? "modify" : "create"
 						}
-
-						// pre-processing newContent for cases where weaker models might add artifacts like markdown codeblock markers (deepseek/llama) or extra escape characters (gemini)
 						if (newContent.startsWith("```")) {
 							// this handles cases where it includes language specifiers like ```python ```js
 							newContent = newContent.split("\n").slice(1).join("\n").trim()
@@ -1045,7 +1043,7 @@ export class Cline {
 						}
 
 						if (!this.api.getModel().id.includes("claude")) {
-							// it seems not just llama models are doing this, but also gemini and potentially others
+							// handle escaped characters if needed
 							if (
 								newContent.includes("&gt;") ||
 								newContent.includes("&lt;") ||
@@ -2182,3 +2180,5 @@ export class Cline {
 		return `<environment_details>\n${details.trim()}\n</environment_details>`
 	}
 }
+
+

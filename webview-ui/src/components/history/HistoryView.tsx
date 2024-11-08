@@ -12,6 +12,10 @@ type HistoryViewProps = {
 
 type SortOption = "newest" | "oldest" | "mostExpensive" | "mostTokens" | "mostRelevant"
 
+const formatRubles = (cost: number) => {
+	return `{cost.toFixed(3).replace('.', ',')} ₽`
+}
+
 const HistoryView = ({ onDone }: HistoryViewProps) => {
 	const { taskHistory } = useExtensionState()
 	const [searchQuery, setSearchQuery] = useState("")
@@ -190,22 +194,6 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 					</div>
 				</div>
 				<div style={{ flexGrow: 1, overflowY: "auto", margin: 0 }}>
-					{/* {presentableTasks.length === 0 && (
-						<div
-							style={{
-								
-								alignItems: "center",
-								fontStyle: "italic",
-								color: "var(--vscode-descriptionForeground)",
-								textAlign: "center",
-								padding: "0px 10px",
-							}}>
-							<span
-								className="codicon codicon-robot"
-								style={{ fontSize: "60px", marginBottom: "10px" }}></span>
-							<div>Start a task to see it here</div>
-						</div>
-					)} */}
 					<Virtuoso
 						style={{
 							flexGrow: 1,
@@ -398,7 +386,7 @@ const HistoryView = ({ onDone }: HistoryViewProps) => {
 														API Cost:
 													</span>
 													<span style={{ color: "var(--vscode-descriptionForeground)" }}>
-														${item.totalCost?.toFixed(4)}
+														{formatRubles(item.totalCost || 0)}
 													</span>
 												</div>
 												<ExportButton itemId={item.id} />

@@ -1,4 +1,4 @@
-import { ApiConfiguration, ApiProvider } from "./api"
+import { ApiConfiguration } from "./api"
 
 export interface WebviewMessage {
 	type:
@@ -16,12 +16,10 @@ export interface WebviewMessage {
 		| "deleteTaskWithId"
 		| "exportTaskWithId"
 		| "resetState"
-		| "requestOllamaModels"
 		| "openImage"
 		| "openFile"
 		| "openMention"
 		| "cancelTask"
-		| "refreshOpenRouterModels"
 	text?: string
 	askResponse?: ClineAskResponse
 	apiConfiguration?: ApiConfiguration

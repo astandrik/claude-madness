@@ -33,14 +33,11 @@
 		"claude",
 		"madness",
 		"dev",
-		"openrouter",
 		"coding",
 		"agent",
 		"autonomous",
-		"chatgpt",
 		"sonnet",
-		"ai",
-		"llama"
+		"ai"
 	],
 	"activationEvents": [
 		"onCommand:cline.plusButtonClicked",

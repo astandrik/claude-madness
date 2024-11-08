@@ -3,9 +3,6 @@ import { useEvent } from "react-use"
 import { ExtensionMessage, ExtensionState } from "../../../src/shared/ExtensionMessage"
 import {
 	ApiConfiguration,
-	ModelInfo,
-	openRouterDefaultModelId,
-	openRouterDefaultModelInfo,
 } from "../../../src/shared/api"
 import { vscode } from "../utils/vscode"
 import { convertTextMateToHljs } from "../utils/textMateToHljs"
@@ -15,7 +12,6 @@ interface ExtensionStateContextType extends ExtensionState {
 	didHydrateState: boolean
 	showWelcome: boolean
 	theme: any
-	openRouterModels: Record<string, ModelInfo>
 	filePaths: string[]
 	setApiConfiguration: (config: ApiConfiguration) => void
 	setCustomInstructions: (value?: string) => void
@@ -36,9 +32,6 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 	const [showWelcome, setShowWelcome] = useState(false)
 	const [theme, setTheme] = useState<any>(undefined)
 	const [filePaths, setFilePaths] = useState<string[]>([])
-	const [openRouterModels, setOpenRouterModels] = useState<Record<string, ModelInfo>>({
-		[openRouterDefaultModelId]: openRouterDefaultModelInfo,
-	})
 
 	const handleMessage = useCallback((event: MessageEvent) => {
 		const message: ExtensionMessage = event.data
@@ -49,13 +42,6 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 				const hasKey = config
 					? [
 							config.apiKey,
-							config.openRouterApiKey,
-							config.awsRegion,
-							config.vertexProjectId,
-							config.openAiApiKey,
-							config.ollamaModelId,
-							config.geminiApiKey,
-							config.openAiNativeApiKey,
 					  ].some((key) => key !== undefined)
 					: false
 				setShowWelcome(!hasKey)
@@ -86,14 +72,6 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 				})
 				break
 			}
-			case "openRouterModels": {
-				const updatedModels = message.openRouterModels ?? {}
-				setOpenRouterModels({
-					[openRouterDefaultModelId]: openRouterDefaultModelInfo, // in case the extension sent a model list without the default model
-					...updatedModels,
-				})
-				break
-			}
 		}
 	}, [])
 
@@ -108,7 +86,6 @@ export const ExtensionStateContextProvider: React.FC<{ children: React.ReactNode
 		didHydrateState,
 		showWelcome,
 		theme,
-		openRouterModels,
 		filePaths,
 		setApiConfiguration: (value) => setState((prevState) => ({ ...prevState, apiConfiguration: value })),
 		setCustomInstructions: (value) => setState((prevState) => ({ ...prevState, customInstructions: value })),

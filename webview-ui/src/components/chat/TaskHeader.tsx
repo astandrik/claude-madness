@@ -92,15 +92,8 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 		}
 	}, [task.text, windowWidth])
 
-	const isCostAvailable = useMemo(() => {
-		return (
-			apiConfiguration?.apiProvider !== "openai" &&
-			apiConfiguration?.apiProvider !== "ollama" &&
-			apiConfiguration?.apiProvider !== "gemini"
-		)
-	}, [apiConfiguration?.apiProvider])
 
-	const shouldShowPromptCacheInfo = doesModelSupportPromptCache && apiConfiguration?.apiProvider !== "openrouter"
+	const shouldShowPromptCacheInfo = doesModelSupportPromptCache
 
 	return (
 		<div style={{ padding: "10px 13px 10px 13px" }}>
@@ -154,7 +147,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 							)}
 						</div>
 					</div>
-					{!isTaskExpanded && isCostAvailable && (
+					{!isTaskExpanded && (
 						<div
 							style={{
 								marginLeft: 10,
@@ -268,7 +261,7 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 										{formatLargeNumber(tokensOut || 0)}
 									</span>
 								</div>
-								{!isCostAvailable && <ExportButton />}
+								<ExportButton />
 							</div>
 
 							{shouldShowPromptCacheInfo && (cacheReads !== undefined || cacheWrites !== undefined) && (
@@ -290,7 +283,6 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 									</span>
 								</div>
 							)}
-							{isCostAvailable && (
 								<div
 									style={{
 										display: "flex",
@@ -299,11 +291,10 @@ const TaskHeader: React.FC<TaskHeaderProps> = ({
 									}}>
 									<div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
 										<span style={{ fontWeight: "bold" }}>API Cost:</span>
-										<span>${totalCost?.toFixed(4)}</span>
+										<span>{totalCost?.toFixed(4)} ₽</span>
 									</div>
 									<ExportButton />
 								</div>
-							)}
 						</div>
 					</>
 				)}
