@@ -42,50 +42,57 @@
 		"ai",
 		"llama"
 	],
-	"activationEvents": [],
+	"activationEvents": [
+		"onCommand:cline.plusButtonClicked",
+		"onCommand:cline.historyButtonClicked",
+		"onCommand:cline.popoutButtonClicked",
+		"onCommand:cline.settingsButtonClicked",
+		"onCommand:cline.openInNewTab",
+		"onWebviewView:claude-dev.SidebarProvider"
+	],
 	"main": "./dist/extension.js",
 	"contributes": {
 		"viewsContainers": {
 			"activitybar": [
 				{
-					"id": "claude-madness-ActivityBar",
+					"id": "claude-dev-ActivityBar",
 					"title": "Claude Madness",
 					"icon": "$(robot)"
 				}
 			]
 		},
 		"views": {
-			"claude-madness-ActivityBar": [
+			"claude-dev-ActivityBar": [
 				{
 					"type": "webview",
-					"id": "claude-madness.SidebarProvider",
+					"id": "claude-dev.SidebarProvider",
 					"name": ""
 				}
 			]
 		},
 		"commands": [
 			{
-				"command": "claudemadness.plusButtonClicked",
+				"command": "cline.plusButtonClicked",
 				"title": "New Task",
 				"icon": "$(add)"
 			},
 			{
-				"command": "claudemadness.historyButtonClicked",
+				"command": "cline.historyButtonClicked",
 				"title": "History",
 				"icon": "$(history)"
 			},
 			{
-				"command": "claudemadness.popoutButtonClicked",
+				"command": "cline.popoutButtonClicked",
 				"title": "Open in Editor",
 				"icon": "$(link-external)"
 			},
 			{
-				"command": "claudemadness.settingsButtonClicked",
+				"command": "cline.settingsButtonClicked",
 				"title": "Settings",
 				"icon": "$(settings-gear)"
 			},
 			{
-				"command": "claudemadness.openInNewTab",
+				"command": "cline.openInNewTab",
 				"title": "Open In New Tab",
 				"category": "Claude Madness"
 			}
@@ -93,24 +100,24 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "claudemadness.plusButtonClicked",
+					"command": "cline.plusButtonClicked",
 					"group": "navigation@1",
-					"when": "view == claude-madness.SidebarProvider"
+					"when": "view == claude-dev.SidebarProvider"
 				},
 				{
-					"command": "claudemadness.historyButtonClicked",
+					"command": "cline.historyButtonClicked",
 					"group": "navigation@2",
-					"when": "view == claude-madness.SidebarProvider"
+					"when": "view == claude-dev.SidebarProvider"
 				},
 				{
-					"command": "claudemadness.popoutButtonClicked",
+					"command": "cline.popoutButtonClicked",
 					"group": "navigation@3",
-					"when": "view == claude-madness.SidebarProvider"
+					"when": "view == claude-dev.SidebarProvider"
 				},
 				{
-					"command": "claudemadness.settingsButtonClicked",
+					"command": "cline.settingsButtonClicked",
 					"group": "navigation@4",
-					"when": "view == claude-madness.SidebarProvider"
+					"when": "view == claude-dev.SidebarProvider"
 				}
 			]
 		}
